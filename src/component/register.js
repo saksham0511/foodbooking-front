@@ -75,8 +75,8 @@ export default class Register extends React.Component {
     return (
       <React.Fragment>
         <form className="container">
-          <div className="alert alert-success">
-            <strong>{isUpdateMode ? "Update info" : "Register"}</strong>
+          <div className="alert alert-success" style = {{textAlign:"center"}}>
+            <strong><h3>{isUpdateMode ? "Update info" : "Register"}</h3></strong>
           </div>
 
           <div className="formGroup">
@@ -161,7 +161,7 @@ export default class Register extends React.Component {
           <Link to="/login">Login</Link>
         </div>
         <div className ={success ? "text-success" : "text-danger"} style ={{textAlign: "center"}}>{this.state.message}</div>
-        <div style={{ marginLeft: 50 }}>
+        <div style={{padding: "0px 200px 0px 200px" }}>
           <MapLocation onCurrentLocation={this.handleCurrentLocation} />
         </div>
       </React.Fragment>
