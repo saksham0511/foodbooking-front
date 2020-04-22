@@ -188,9 +188,9 @@ export default class UserDashboard extends React.Component {
                   required
                 >
                   <option value="" />
-                  <option value="Small">Small (Rs. 50)</option>
-                  <option value="Medium">Medium (Rs. 100)</option>
-                  <option value="Large">Large (Rs. 150) </option>
+                  <option value="Small">Small (₹ 50)</option>
+                  <option value="Medium">Medium (₹ 100)</option>
+                  <option value="Large">Large (₹ 150) </option>
                 </select>
               </div>
 
@@ -229,7 +229,7 @@ export default class UserDashboard extends React.Component {
               <strong>Pricing Details</strong>
               <div className="formGroup">
                 <label className="float: left">
-                  Price : Rs. {this.state.price}
+                  Price : ₹ {this.state.price}
                 </label>
                 <br />
                 <label className="float: left">
@@ -237,7 +237,7 @@ export default class UserDashboard extends React.Component {
                 </label>
                 <br/>
                 <label className="float: left">
-                  Delivery Charges (5 Rs. per km): Rs. {this.state.distance * 5} 
+                  Delivery Charges (₹ 5 per km): ₹ {this.state.distance * 5} 
                 </label>
                 <br />
                 <label className="float: left">
@@ -246,7 +246,7 @@ export default class UserDashboard extends React.Component {
                 <br />
                 <label className="float: left">
                   <strong>
-                    Total Price : Rs.{" "}
+                    Total Price : ₹ {" "}
                     {this.totalPrice()}
                   </strong>
                 </label>

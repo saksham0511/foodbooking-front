@@ -161,7 +161,7 @@ export default class Register extends React.Component {
           <Link to="/login">Login</Link>
         </div>
         <div className ={success ? "text-success" : "text-danger"} style ={{textAlign: "center"}}>{this.state.message}</div>
-        <div style={{padding: "0px 200px 0px 200px" }}>
+        <div style={{padding: "0px 10% 0px 10%" }}>
           <MapLocation onCurrentLocation={this.handleCurrentLocation} />
         </div>
       </React.Fragment>

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
 
 const mapStyles = {
-  width: "100%",
+  width: "90%",
   height: "100%",
 };
 
@@ -74,6 +74,8 @@ export class SelectHotel extends Component {
     return (
       <div style ={{textAlign:"center"}}>
       <label><strong><h2>Choose a desirable Pick-up point</h2></strong></label>
+      <br />
+      <div style ={{padding : "0px 5% 0px 5%"}} >
       <Map
         google={this.props.google}
         zoom={10}
@@ -95,6 +97,7 @@ export class SelectHotel extends Component {
           </div>
         </InfoWindow>
       </Map>
+      </div>
       </div>
     );
   }

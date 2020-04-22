@@ -94,6 +94,7 @@ export default class Dashboard extends React.Component {
   render() {
     const { history } = this.props;
     return (
+      <React.Fragment>
       <div class="container">
          <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
           <a class="navbar-brand" href="#"> <Link
@@ -140,11 +141,14 @@ export default class Dashboard extends React.Component {
         </form>
 
         <hr />
+      </div>
+        <div style={{padding: "0px 10% 0px 10%" }}>
         <MapContainer
           markerToDisplay={this.state.bookingsToDisplay}
           history={history}
         />
       </div>
+      </React.Fragment>
     );
   }
 }
