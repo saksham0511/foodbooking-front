@@ -8,6 +8,7 @@ import UserDashboard from "./component/userdashboard";
 import EmployeeDashboard from "./component/employeedashboard";
 import BookingDetails from "./component/bookingdetails";
 import SelectHotel from "./component/selecthotel";
+import EditProfile from "./component/editprofile";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -29,6 +30,7 @@ export default class App extends React.Component {
             component={EmployeeDashboard}
           />
           <Route exact path="/selecthotel" component={SelectHotel} />
+          <Route exact path="/editprofile" component={EditProfile} />
         </Switch>
       </Router>
     );

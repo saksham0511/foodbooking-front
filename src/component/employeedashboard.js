@@ -1,7 +1,7 @@
 import React from "react";
 import { httpRequest } from "../constant";
 import MapContainer from "./multimarkermap";
-
+import { Link } from "react-router-dom";
 export default class Dashboard extends React.Component {
   state = {
     bookingType: "All",
@@ -85,11 +85,28 @@ export default class Dashboard extends React.Component {
     }
   };
 
+  logout = () => {
+    localStorage.clear();
+    sessionStorage.clear();
+    this.props.history.replace("/login");
+  }
+
   render() {
     const { history } = this.props;
     return (
-      <div class="container-fluid">
-        <form class="form-inline">
+      <div class="container">
+         <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
+          <a class="navbar-brand" href="#"> <Link
+                  to={{
+                    pathname: "/editprofile",
+                    search: "?sort=name",
+                    hash: "#the-hash",
+                    state: { userDetails: true }
+                  }}
+                  >Edit Profile</Link></a>
+                  <a className="btn btn-primary" onClick = {this.logout} role="button" style ={{marginInlineStart:"auto"}}>Logout</a>
+        </nav>
+        <form class="form-inline mt-3">
           <label htmlFor="bookingType">Booking Type</label>
           <select
             id="bookingType"

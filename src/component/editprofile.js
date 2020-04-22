@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import MapLocation from "./googlemap";
 
-export default class Register extends React.Component {
+export default class EditProfile extends React.Component {
   initalUserObj = {
     name: "",
     email: "",
@@ -16,11 +16,10 @@ export default class Register extends React.Component {
       latitude: "",
       longitude: "",
     },
-    success : false
   };
 
   state = {
-    user: this.props.user || { ...this.initalUserObj },
+    user: JSON.parse(localStorage.getItem("user")),
     isUpdateMode: this.props.mode,
     lat: "",
     lng: "",
@@ -42,6 +41,9 @@ export default class Register extends React.Component {
 
     this.setState({ user: user });
   };
+  componentDidMount(){
+ //   setUserValue(this.state.user)
+  }
 
   saveDetails = (event) => {
     const data = httpRequest("/user/register", this.state.user);
@@ -52,13 +54,14 @@ export default class Register extends React.Component {
         if (result.status == "200") {
           console.log(result);
           this.setState({ user: this.initalUserObj });
-          this.setState({
-            message: "User is Successfully Registered !! Please Login",
-            success: true,
-          });
           localStorage.setItem("user", JSON.stringify(result.body));
+          if (result.body.community == "User") {
+            this.props.history.replace("/userdashboard");
+          } else {
+            this.props.history.replace("/employeedashboard");
+          }
         } else {
-          this.setState({ message: result.message, success: false });
+          this.setState({ message: result.message });
         }
       })
       .catch((error) => {
@@ -70,13 +73,12 @@ export default class Register extends React.Component {
 
   render() {
     let isUpdateMode = this.props.isUpdateMode;
-    const {success} = this.state;
 
     return (
       <React.Fragment>
         <form className="container">
           <div className="alert alert-success">
-            <strong>{isUpdateMode ? "Update info" : "Register"}</strong>
+            <strong>Update Information</strong>
           </div>
 
           <div className="formGroup">
@@ -99,6 +101,7 @@ export default class Register extends React.Component {
               className="form-control"
               value={this.state.user.email}
               onChange={(e) => this.setNewValue(e)}
+              disabled={true}
               required
             />
           </div>
@@ -133,6 +136,7 @@ export default class Register extends React.Component {
               className="custom-select"
               value={this.state.user.community}
               onChange={(e) => this.setNewValue(e)}
+              disabled={true}
             >
               <option value="" />
               <option value="User">User</option>
@@ -140,29 +144,21 @@ export default class Register extends React.Component {
             </select>
           </div>
           <br />
-          <div className="formGroup text-center">
+          <div className="formGroup">
             <button
               type="submit"
               onClick={(e) => this.saveDetails(e)}
               className="btn btn-primary"
             >
-              {isUpdateMode ? "Update User Details" : "Add New User"}
-            </button>
-            <button
-              className="btn btn-secondary"
-              onClick={() => this.setState({ user: { ...this.initalUserObj } })}
-            >
-              Clear All Fields
+              Update
             </button>
           </div>
         </form>
-        <div class = "text-center">
-          <label>Aready Have Account ?</label>
-          <Link to="/login">Login</Link>
+        <div>
         </div>
-        <div className ={success ? "text-success" : "text-danger"} style ={{textAlign: "center"}}>{this.state.message}</div>
+        <div>{this.state.message}</div>
         <div style={{ marginLeft: 50 }}>
-          <MapLocation onCurrentLocation={this.handleCurrentLocation} />
+        {/*  <MapLocation onCurrentLocation={this.handleCurrentLocation} />  */}
         </div>
       </React.Fragment>
     );

@@ -1,4 +1,4 @@
-export const IP = "http://localhost:8080"; //43.163
+export const IP = "https://foodbooking.herokuapp.com/"; //43.163
 export const httpRequest = (action, requestBody) => {
   const requestOptions = {
     method: "POST",

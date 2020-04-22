@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
 
 const mapStyles = {
-  width: "80%",
-  height: "400px",
+  width: "100%",
+  height: "100%",
 };
 
 export class SelectHotel extends Component {
@@ -12,7 +12,7 @@ export class SelectHotel extends Component {
     activeMarker: {}, //Shows the active marker upon click
     selectedPlace: {}, //Shows the infoWindow to the selected place upon a marker
     markerToDisplay: [
-      { latitude: 12.971726, longitude: 77.750073 },
+      { latitude: 26, longitude: 73 },
       { latitude: 12.979139, longitude: 77.751406 },
       { latitude: 12.983606, longitude: 77.753699 },
       { latitude: 12.987084, longitude: 77.75384 },
@@ -47,6 +47,7 @@ export class SelectHotel extends Component {
 
   onMarkerClick = (detail, props, marker, e) => {
     console.log("props", this.props);
+    sessionStorage.setItem("hotel location", JSON.stringify(detail));
     this.props.history.push({
       pathname: "/userdashboard",
       search: "",
@@ -71,6 +72,8 @@ export class SelectHotel extends Component {
 
   render() {
     return (
+      <div style ={{textAlign:"center"}}>
+      <label><strong><h2>Choose a desirable Pick-up point</h2></strong></label>
       <Map
         google={this.props.google}
         zoom={10}
@@ -92,6 +95,7 @@ export class SelectHotel extends Component {
           </div>
         </InfoWindow>
       </Map>
+      </div>
     );
   }
 }

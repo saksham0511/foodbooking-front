@@ -1,5 +1,6 @@
 import React from "react";
 import { httpRequest } from "../constant";
+import { Link } from "react-router-dom";
 export default class UserDashboard extends React.Component {
   state = {
     booking: {
@@ -20,8 +21,7 @@ export default class UserDashboard extends React.Component {
 
   distanceCalculation = () => {
 
-    const bLat =  this.props.location.state.detail.latitude;
-    const bLong =  this.props.location.state.detail.longitude;
+    const {latitude : bLat, longitude : bLong} =  JSON.parse(sessionStorage.getItem("hotel location"));
 
     const user = JSON.parse(localStorage.getItem("user"));
     const uLat = user.location.latitude;
@@ -57,15 +57,17 @@ export default class UserDashboard extends React.Component {
 } 
    
   totalPrice = () =>{
-  return  (this.state.distance * 5) + this.state.price - (this.state.price * this.state.discount) / 100;
+  return  (this.state.distance * 5) + this.state.price - (((this.state.distance * 5) + this.state.price) * this.state.discount) / 100;
   }
 
    
   saveBookingDetails = (event) => {
     let booking = this.state.booking;
+    const {latitude : bLat, longitude : bLong} =  JSON.parse(sessionStorage.getItem("hotel location"));
+
     booking.hotelLocation = {
-      latitude : this.props.location.state.detail.latitude,
-      longitude : this.props.location.state.detail.longitude
+      latitude : bLat,
+      longitude :bLong
     }
   
 
@@ -90,6 +92,7 @@ export default class UserDashboard extends React.Component {
           "Booking successfull, we will inform you once our delivery boy pickup your order, thanks"
         );
         console.log(json);
+        this.props.history.replace("/selecthotel");
       })
       .catch((error) => {
         console.log(error);
@@ -139,10 +142,27 @@ export default class UserDashboard extends React.Component {
     this.setState({ booking: booking, price: price, discount: discount });
   };
 
+  logout = () => {
+    localStorage.clear();
+    sessionStorage.clear();
+    this.props.history.replace("/login");
+  }
+
   render() {
     
     return (
-      <div className="container-fluid">
+      <div className="container">
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
+          <a class="navbar-brand" href="#"> <Link
+                  to={{
+                    pathname: "/editprofile",
+                    search: "?sort=name",
+                    hash: "#the-hash",
+                    state: { userDetails: true }
+                  }}
+                  >Edit Profile</Link></a>
+                  <a className="btn btn-primary" onClick = {this.logout} role="button" style ={{marginInlineStart:"auto"}}>Logout</a>
+        </nav>
         <div className="card">
           <div className="card-body">
             <form className="form">
@@ -170,7 +190,7 @@ export default class UserDashboard extends React.Component {
                   <option value="" />
                   <option value="Small">Small (Rs. 50)</option>
                   <option value="Medium">Medium (Rs. 100)</option>
-                  <option value="Large">Large (Rs. 150)</option>
+                  <option value="Large">Large (Rs. 150) </option>
                 </select>
               </div>
 
@@ -217,7 +237,7 @@ export default class UserDashboard extends React.Component {
                 </label>
                 <br/>
                 <label className="float: left">
-                  Delivery Charge : {this.state.distance * 5} 
+                  Delivery Charges (5 Rs. per km): Rs. {this.state.distance * 5} 
                 </label>
                 <br />
                 <label className="float: left">
@@ -240,6 +260,10 @@ export default class UserDashboard extends React.Component {
                 >
                   Order Now
                 </button>
+              </div>
+              <br />
+              <div>
+                
               </div>
             </form>
           </div>

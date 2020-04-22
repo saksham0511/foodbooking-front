@@ -6,6 +6,7 @@ export default class Login extends React.Component {
     email: "",
     password: "",
     error: "",
+    success:false,
   };
 
   handleSubmit = (event) => {
@@ -20,13 +21,14 @@ export default class Login extends React.Component {
       .then((data) => {
         if (data.status == "200") {
           console.log("success");
+          localStorage.setItem("user", JSON.stringify(data.body));
           if (data.body.community == "User") {
             this.props.history.replace("/selecthotel");
           } else {
             this.props.history.replace("/employeedashboard");
           }
         } else {
-          this.setState({ error: data.message });
+          this.setState({ error: data.message, success:false });
         }
       })
       .catch((err) => console.log("error", err));
@@ -35,12 +37,12 @@ export default class Login extends React.Component {
   };
 
   render() {
-    const { error } = this.state;
+    const { error,success } = this.state;
     return (
       <React.Fragment>
-        <form className="container-fluid" onSubmit={this.handleSubmit}>
-          <div className="imgcontainer">
-            <img src="\login.jpg" alt="Avatar" className="avatar" />
+        <form className="container" onSubmit={this.handleSubmit}>
+          <div className="imgcontainer text-center">
+            <img src="\login3.jpg" alt="Avatar" className="avatar" />
           </div>
 
           <div className="formGroup">
@@ -65,15 +67,17 @@ export default class Login extends React.Component {
               onChange={(e) => this.setState({ password: e.target.value })}
             />
           </div>
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
+          <div class = "text-center">
+            <button type="submit" className="btn btn-primary">
+              Submit
+            </button>
+          </div>
         </form>
-        <div>
-          <label>Do not Have Account ?</label>
-          <Link to="/register">Register</Link>
+        <div class = "text-center">
+          <label>Do not have an account?</label>
+          <Link to="/register"> Register</Link>
         </div>
-        <div>{error}</div>
+        <div  className ={success ? "text-success" : "text-danger"} style ={{textAlign: "center"}}>{error}</div>
       </React.Fragment>
     );
   }
